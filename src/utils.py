@@ -29,11 +29,8 @@ def save_to_file(tasks: List[Task], filename) -> None:
 
 
 def load_from_file(filename) -> List[Task]:
-    global task_id_counter
     if os.path.exists(filename):
         with open(filename, "rb") as file:
             tasks = pickle.load(file)
-            if tasks:
-                task_id_counter = get_max_task_id(tasks)
             return tasks
     return []
