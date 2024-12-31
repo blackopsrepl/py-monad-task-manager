@@ -8,14 +8,21 @@ Task = Tuple[str, str, int, Optional[int]]
 State = Callable[[List[Task]], Tuple[List[Task], any]]
 
 
-# Returns a new state monad with the given value
 def return_(value: any) -> State:
+    """
+    Returns a new state monad with a given value.
+    This is used to provide a way to return a value without altering the task state.
+    """
+
     def state_fn(state: List[Task]) -> Tuple[List[Task], any]:
         return state, value
 
     return state_fn
 
 
-# Binds the state monad to a function and returns a new monad with updated state
 def bind(state_monad: State, func: Callable[[any], State]) -> State:
+    """
+    Binds the state monad to a function, and returns a new state monad with the updated state.
+    This is the core monadic pattern used to chain state transitions.
+    """
     return lambda state: func(state_monad(state)[1])(state_monad(state)[0])

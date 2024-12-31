@@ -23,6 +23,11 @@ from utils import load_from_file, save_to_file, search_row_by_id
 
 
 def main():
+    """
+    Main function that handles the core task management operations.
+    Loads the task list from the file, then enters an interactive loop for user input.
+    Performs actions like adding, deleting, updating, and toggling task statuses.
+    """
     tasks = load_from_file("todos.pkl")
     console = Console()
 
