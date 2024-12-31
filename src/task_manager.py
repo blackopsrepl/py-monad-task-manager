@@ -26,7 +26,7 @@ def add_task(new_task: Task) -> State:
 def update_task(index: int, new_task: Task) -> State:
     def state_fn(state: List[Task]) -> Tuple[List[Task], None]:
         if 0 <= index < len(state):
-            state[index] = new_task
+            state = state[:index] + [new_task] + state[index + 1 :]
         return state, None
 
     return state_fn
@@ -49,7 +49,11 @@ def toggle_task_status(index: int) -> State:
             return (name, new_status, task_id, parent_id)
 
         if 0 <= index < len(state):
-            state[index] = toggle_status_for_task(state[index])
+            state = (
+                state[:index]
+                + [toggle_status_for_task(state[index])]
+                + state[index + 1 :]
+            )
         return state, None
 
     return state_fn
